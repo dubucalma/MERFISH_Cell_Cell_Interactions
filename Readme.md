@@ -1,5 +1,8 @@
 ## Cell-cell Interactions Analyses
 
+The aim of this repository is to quantify spatial colocalization between annotated single cells as a proxy for potential functional interactions within local cortical microcircuits. By testing observed spatial patterns against randomized null models, we identify pairs of cell types that are significantly enriched or depleted in physical proximity.
+
+
 *Preliminary:*<br>
 To generate the cell types' distribution for the Figure 2D:
 `Layers_content_analysis.R`
