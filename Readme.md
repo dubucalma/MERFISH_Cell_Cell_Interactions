@@ -84,6 +84,31 @@ Compare observed frequencies against the null distribution
 
 ### 2. Downstream analyses
 
+#### Correlation of CCI profiles between samples
+
+File to generate the Pearson Correlation Heatmap:
+`CCI_upper_deeper_correlations_clean.ipynb`
+
+This analysis computes the **similarity of cell-cell interactions (CCI) fold change profiles**, across multiple brain samples, for specific subclasses of cell types.
+
+**Input requirement** <br>
+The fold change table obtained from the previous step (startfied by layer, e.g. upper vs deeper).
+
+For each sample, there are two input files:
+- fold_change_upper.tsv --> interactions in upper layers (e.g. L2/3)
+- fold_change_deeper.tsv --> interactions in deeper layers (e.g L4-6)
+
+**Filter by subclasses of interest**<br>
+The data are filtered with `process_data_subclasses`, keeping only the interaction pairs that involve specific subclasses (e.g. Vip vs inhibitory).
+
+**Processing** <br>
+Compute **Pearson Correlations** between fold change vectors for all sample pairs.
+
+**Output**<br>
+A correlation matrix representing the similarity of CCI fold change profiles across samples, as well as a heatmap summarizing these results.
+
+
+
 #### Generation of cluster plots with the fold change 
 
 File to generate clusterplots and heatmaps with the fold change per pair (MGE versus CGE) in aSTG and pSTG slices:
