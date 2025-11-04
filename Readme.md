@@ -52,7 +52,8 @@ Each table summarizes the number of neighbor relationships between all pairs of 
 In the script `Compute_frequency_randomization_layers.R` the randomization is done separately for each bin ("upper", "deeper"):
 instead of one global set of permutations, `Compute_frequency_randomization()` is called once per bin, so `Randomization_per_bin` stores a list of results
 split by layer (upper vs deeper).
-
+<br>
+<br>
 
 #### 1b. Calculate the enrichement of specific cell-types interactions:
 
@@ -86,7 +87,7 @@ Compare observed frequencies against the null distribution
 ___
 ### 2. Downstream analyses
 
-#### Correlation of CCI profiles between samples
+#### 2a. Correlation of CCI profiles between samples
 
 File to generate the Pearson Correlation Heatmap:
 `CCI_upper_deeper_correlations_clean.ipynb`
@@ -108,10 +109,11 @@ Compute **Pearson Correlations** between fold change vectors for all sample pair
 
 **Output**<br>
 A correlation matrix representing the similarity of CCI fold change profiles across samples, as well as a heatmap summarizing these results.
+<br>
+<br>
 
 
-
-#### Generation of cluster plots with the fold change 
+#### 2b. Generation of cluster plots with the fold change 
 
 File to generate clusterplots and heatmaps with the fold change per pair (MGE versus CGE) in aSTG and pSTG slices:
 `CCI_upper_deeper_barplots_clean.ipynb`
