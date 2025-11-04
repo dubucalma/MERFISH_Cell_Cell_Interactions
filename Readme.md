@@ -7,6 +7,8 @@ The aim of this repository is to quantify spatial colocalization between annotat
 To generate the cell types' distribution for the Figure 2D:
 `Layers_content_analysis.R`
 
+___
+
 ### 1. Processing the interactions
 
 #### 1a. 1000 permutations of the cells positions / Randomization of the positions
@@ -81,7 +83,7 @@ Compare observed frequencies against the null distribution
 
 - Optional simplified output: a compact file containing only the key enrichment metrics (e.g. Fold Change, P-value) for easier downstream visualization or plotting.
 
-
+___
 ### 2. Downstream analyses
 
 #### Correlation of CCI profiles between samples
