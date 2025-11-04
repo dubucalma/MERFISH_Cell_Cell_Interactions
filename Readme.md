@@ -4,8 +4,8 @@ The aim of this repository is to quantify spatial colocalization between annotat
 
 
 *Preliminary:*<br>
-To generate the cell types' distribution for the Figure 2D:
-`Layers_content_analysis.R`
+To generate the cell types' distribution for the Figure 1F:
+`paper_figures/Layers_content_analysis.R`
 
 ___
 
@@ -14,13 +14,13 @@ ___
 #### 1a. 1000 permutations of the cells positions / Randomization of the positions
 
 Original script to compute permutations on the whole slice:
-`Compute_frequency_randomization.R`
+`compute_randomization/Compute_frequency_randomization.R`
 
 Derived script for permutations per layer (Upper and Deeper):
-`Compute_frequency_randomization_layers.R`
+`compute_randomization/Compute_frequency_randomization_layers.R`
 
 Derived script for permutations per bin (electrophy-bin):
-`Compute_frequency_randomization_electrophy_bins.R`
+`compute_randomization/Compute_frequency_randomization_electrophy_bins.R`
 
 
 **Input requirements**  
@@ -49,7 +49,7 @@ A serialized R object `(.rds)` containing a list of 1,000 cell–cell contact fr
 Each table summarizes the number of neighbor relationships between all pairs of cell types.
 
 
-In the script `Compute_frequency_randomization_layers.R` the randomization is done separately for each bin ("upper", "deeper"):
+In the script `compute_randomization/Compute_frequency_randomization_layers.R` the randomization is done separately for each bin ("upper", "deeper"):
 instead of one global set of permutations, `Compute_frequency_randomization()` is called once per bin, so `Randomization_per_bin` stores a list of results
 split by layer (upper vs deeper).
 <br>
@@ -57,12 +57,8 @@ split by layer (upper vs deeper).
 
 #### 1b. Calculate the enrichement of specific cell-types interactions:
 
-Scripts to do this analysis: 
-Original CCI file (adapted a bit for bins): 
-`CC_interactions_clean.R` ON PROCESS OF CLEANING
-
-Derived CCI file for layers:
-`CCI_clean_layers.R` (Check input data for randomization)
+Scripts to run this analysis, stratified by layer:
+`CCI_calculation/CCI_clean_layers.R` 
 
 **Input requirements** <br>
 This step uses as input:
@@ -85,12 +81,35 @@ Compare observed frequencies against the null distribution
 - Optional simplified output: a compact file containing only the key enrichment metrics (e.g. Fold Change, P-value) for easier downstream visualization or plotting.
 
 ___
+
 ### 2. Downstream analyses
 
-#### 2a. Correlation of CCI profiles between samples
+#### 2a. Generation of cluster plots with the fold change 
 
-File to generate the Pearson Correlation Heatmap:
-`CCI_upper_deeper_correlations_clean.ipynb`
+File to generate clusterplots and heatmaps (Figure 1G) with the fold change per pair (MGE versus CGE) in aSTG and pSTG slices:
+`paper_figures/CCI_upper_deeper_barplots_clean.ipynb`
+
+This notebook `CCI_upper_deeper_brplots_clean.ipynb` generates barplots and heatmaps summarizing cell–cell interaction (CCI) fold-changes (Figure 1G). It takes the fold-change tables from the previous step and visualizes standardized fold-change values for each interacting pair, comparing MGE vs CGE in aSTG and pSTG slices.
+
+**Input requirements**<br>
+The fold change table obtained from the previous step (stratified by layer, e.g. upper vs deeper).
+
+For each sample, there are two input files:
+- fold_change_upper.tsv → interactions in upper layers (e.g. L2/3)
+- fold_change_deeper.tsv → interactions in deeper layers (e.g. L4–L6)
+
+**Output**<br>
+Barplots of standardized fold-change (Fold_change_z) per pair across samples for aSTG and pSTG.
+
+The notebook also includes an optional second visualization step that produces heatmaps of the Fold change values per pair (raw or standardized), for aSTG and pSTG. Only positive fold changes are annotated inside the heatmap cells, and missing values across samples are displayed as light grey.
+<br>
+<br>
+
+
+#### 2b. Correlation of CCI profiles between samples
+
+File to generate the Pearson Correlation Heatmap (Figure 1H):
+`paper_figures/CCI_upper_deeper_correlations_clean.ipynb`
 
 This analysis computes the **similarity of cell-cell interactions (CCI) fold change profiles**, across multiple brain samples, for specific subclasses of cell types.
 
@@ -109,25 +128,3 @@ Compute **Pearson Correlations** between fold change vectors for all sample pair
 
 **Output**<br>
 A correlation matrix representing the similarity of CCI fold change profiles across samples, as well as a heatmap summarizing these results.
-<br>
-<br>
-
-
-#### 2b. Generation of cluster plots with the fold change 
-
-File to generate clusterplots and heatmaps with the fold change per pair (MGE versus CGE) in aSTG and pSTG slices:
-`CCI_upper_deeper_barplots_clean.ipynb`
-
-This notebook `CCI_upper_deeper_brplots_clean.ipynb` generates barplots, and heatmaps summarizing cell–cell interaction (CCI) fold-changes across samples. You can run it for CGE↔CGE or MGE↔MGE pairs and for upper (e.g., L2/3) or deeper (e.g., L4–L6) layers.
-
-**Input requirements**<br>
-The fold change table obtained from the previous step (stratified by layer, e.g. upper vs deeper).
-
-For each sample, there are two input files:
-- fold_change_upper.tsv → interactions in upper layers (e.g. L2/3)
-- fold_change_deeper.tsv → interactions in deeper layers (e.g. L4–L6)
-
-**Output**<br>
-Barplots of standardized fold-change (Fold_change_z) per pair across samples for aSTG and pSTG.
-
-The notebook also includes an optional second visualization step that produces heatmaps of the Fold change values per pair (raw or standardized), for aSTG and pSTG. Only positive fold changes are annotated inside the heatmap cells, and missing values across samples are displayed as light grey.

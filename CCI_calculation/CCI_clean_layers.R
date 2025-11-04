@@ -1,4 +1,4 @@
-## CCI for layers - bins: Adatation to list of lists, instead os simple lists...
+## CCI for layers - bins:
 
 
 #############################
